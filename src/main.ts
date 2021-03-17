@@ -5,8 +5,8 @@ import {
   RpcException,
   Transport,
 } from '@nestjs/microservices';
-import { AppModule } from './app.module';
 import { status } from 'grpc';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const logger = new Logger('AuthService');
@@ -15,11 +15,11 @@ async function bootstrap() {
     {
       transport: Transport.GRPC,
       options: {
-        url: '0.0.0.5000',
-        package: [],
-        protoPath: [],
+        url: '0.0.0.0:5000',
+        package: 'auth',
+        protoPath: './auth.proto',
       },
-    }
+    },
   );
 
   app.useGlobalPipes(
