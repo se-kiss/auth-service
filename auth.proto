@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  rpc Register (CreateIdentityArgs) returns (Identity) {}
+  rpc Login (LoginArgs) returns (Token) {}
+}
+
+message CreateIdentityArgs {
+  string userId = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message Identity {
+  string userId = 1;
+  string email = 2;
+  string _createdAt = 4;
+  string _updatedAt = 5;
+}
+
+message LoginArgs {
+  string email = 1;
+  string password = 2;
+}
+
+message Token {
+  string token = 1;
+}
