@@ -5,7 +5,6 @@ package auth;
 service AuthService {
   rpc Register (CreateIdentityArgs) returns (Identity) {}
   rpc Login (LoginArgs) returns (Token) {}
-  rpc VerifyToken (VerifyArgs) returns (Decoded) {}
 }
 
 message CreateIdentityArgs {
@@ -27,13 +26,5 @@ message LoginArgs {
 }
 
 message Token {
-  string token = 1;
-}
-
-message Decoded {
-  string decoded = 1;
-}
-
-message VerifyArgs {
   string token = 1;
 }

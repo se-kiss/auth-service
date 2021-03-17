@@ -37,11 +37,6 @@ export class AuthService implements OnModuleInit {
     return await createdUser.save();
   }
 
-  async verifyToken(args: VerifyArgs): Promise<string> {
-    const decoded = jwt.verify(args.token, process.env.JWT_SECRET);
-    return decoded.toString();
-  }
-
   async getUserByEmail(email: string): Promise<Identity> {
     const user = await this.identityModel.findOne({ email }).exec();
     if (!user) throw new NotFoundException();

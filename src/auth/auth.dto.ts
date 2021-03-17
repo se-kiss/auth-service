@@ -76,9 +76,3 @@ export class LoginArgs {
   @IsString()
   password: string;
 }
-
-export class VerifyArgs {
-  @IsNotEmpty()
-  @IsString()
-  token: string;
-}
