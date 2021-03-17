@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiss-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiss-auth
+  template:
+    metadata:
+      labels:
+        app: kiss-auth
+    spec:
+      containers:
+      - name: kiss-auth
+        image: registry.gitlab.com/nestz671/kiss-container-registries/auth:0.0.1
+        ports:
+        - containerPort: 5000
+        env:
+          - name: MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: mongodb-root-password
+          - name: MONGODB_URL
+            value: mongodb://root:$(MONGODB_PASSWORD)@mongodb:27017/kiss-auth?authSource=admin
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+      imagePullSecrets:
+        - name: gitlab-docker-registry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiss-auth
+spec:
+  type: ClusterIP
+  selector:
+    app: kiss-auth
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
